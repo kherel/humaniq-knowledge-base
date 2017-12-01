@@ -3,7 +3,7 @@ import CustomScroll from 'react-custom-scroll'
 import 'react-custom-scroll/dist/customScroll.css'
 import { Motion, spring } from 'react-motion'
 import ScrollHandler from './ScrollHandler'
-import A_Container from 'A_Container'
+import Header from './Header'
 import Menu from './Menu'
 import Article from './Article'
 import Section from "./Article/Section";
@@ -11,7 +11,7 @@ import './styles.scss'
 import {cssClassName} from 'utils'
 const cn = cssClassName('KnowledgeBase');
 
-let headerOffset = 104
+let headerOffset = 90
 
 class KnowledgeBase extends Component {
 
@@ -41,9 +41,7 @@ class KnowledgeBase extends Component {
   }
 
   _handleResize = () => {
-    if(window.innerWidth < 1025) {
-      this.setState({anchorCoords: this._getAnchorCoords(this.anchorBlocks, headerOffset)})
-    }
+    this.setState({anchorCoords: this._getAnchorCoords(this.anchorBlocks, headerOffset)})
   }
 
   _handleScroll = (e) => {
@@ -85,10 +83,6 @@ class KnowledgeBase extends Component {
   componentDidMount() {
     window.addEventListener("resize", this._handleResize)
 
-    if(window.innerWidth < 1601 ) {
-      headerOffset = 66
-    }
-
     setTimeout(() => {
       this.setState({anchorCoords: this._getAnchorCoords(this.anchorBlocks, headerOffset)})
     }, 2000)
@@ -106,70 +100,74 @@ class KnowledgeBase extends Component {
     const {articles} = this.props
     const {scrollTo, scrollPosition, currentAnchorId, scrollMotionActive} = this.state
     return (
-      <A_Container mix={cn()}>
-
-        <Menu
-          mix={cn('menu')}
-          articles={articles}
-          setScrollTo={this.setScrollTo}
-          currentAnchorId={currentAnchorId}
+      <main className={cn()}>
+        <Header
+          mix={cn('header')}
         />
 
-        <div className={cn('articles')}>
-          <CustomScroll
-            ref="customScroll"
-            heightRelativeToParent='100%'
-            onScroll={this._handleScroll}
-          >
-            {articles.map((article) => (
-              <Article
-                anchorRef={(domNode) => {this.anchorBlocks = {...this.anchorBlocks, [article.id]: domNode}}}
-                key={article.id}
-                mix={cn('article')}
-                articleData={article}
-              >
+        <div className={cn('content')}>
+          <Menu
+            mix={cn('menu')}
+            articles={articles}
+            setScrollTo={this.setScrollTo}
+            currentAnchorId={currentAnchorId}
+          />
 
-                <div className={cn('sections')}>
-                  {article.sections.map((section) => {
-                    return (
-                      <Section
-                        anchorRef={(domNode) => {this.anchorBlocks = {...this.anchorBlocks, [section.id]: domNode}}}
-                        key={section.id}
-                        mix={cn('section')}
-                        sectionData={section}
-                      />
-                    )
-                  })}
-                </div>
-              </Article>
-            ))}
-          </CustomScroll>
+          <div className={cn('articles')}>
+            <CustomScroll
+              ref="customScroll"
+              heightRelativeToParent='100%'
+              onScroll={this._handleScroll}
+            >
+              {articles.map((article) => (
+                <Article
+                  anchorRef={(domNode) => {this.anchorBlocks = {...this.anchorBlocks, [article.id]: domNode}}}
+                  key={article.id}
+                  mix={cn('article')}
+                  articleData={article}
+                >
+
+                  <div className={cn('sections')}>
+                    {article.sections.map((section) => {
+                      return (
+                        <Section
+                          anchorRef={(domNode) => {this.anchorBlocks = {...this.anchorBlocks, [section.id]: domNode}}}
+                          key={section.id}
+                          mix={cn('section')}
+                          sectionData={section}
+                        />
+                      )
+                    })}
+                  </div>
+                </Article>
+              ))}
+            </CustomScroll>
+          </div>
+
+          {scrollMotionActive ? (
+            <Motion
+              defaultStyle={{
+                scrollMotionProgress: scrollPosition //from
+              }}
+              style={{
+                scrollMotionProgress: spring(scrollTo, {stiffness: 260, damping: 26}) //to
+              }}
+            >
+              {({scrollMotionProgress}) => {
+                return(
+                  <ScrollHandler
+                    scrollContainer={this.refs.customScroll.refs.innerContainer}
+                    scrollTo={scrollTo}
+                    scrollMotionProgress={scrollMotionProgress}
+                    finishScrollMotion={this.finishScrollMotion}
+                  />
+                )
+
+              }}
+
+            </Motion>) : (null)}
         </div>
-
-        {scrollMotionActive ? (
-          <Motion
-            defaultStyle={{
-              scrollMotionProgress: scrollPosition //from
-            }}
-            style={{
-              scrollMotionProgress: spring(scrollTo, {stiffness: 260, damping: 26}) //to
-            }}
-          >
-            {({scrollMotionProgress}) => {
-              return(
-                <ScrollHandler
-                  scrollContainer={this.refs.customScroll.refs.innerContainer}
-                  scrollTo={scrollTo}
-                  scrollMotionProgress={scrollMotionProgress}
-                  finishScrollMotion={this.finishScrollMotion}
-                />
-              )
-
-            }}
-
-          </Motion>) : (null)}
-
-      </A_Container>
+      </main>
     )
   }
 }

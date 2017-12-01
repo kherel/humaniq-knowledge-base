@@ -1,0 +1,11 @@
+@import 'common/settings/variables';
+@import 'common/utils';
+
+.kb-header {
+  display: flex;
+  align-items: center;
+  &__logo {
+    width: 115px;
+    height: 25px;
+  }
+}

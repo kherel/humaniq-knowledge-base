@@ -3,19 +3,32 @@
 
 .knowledge-base {
   position: relative;
-  max-height: 100vh;
-  overflow: hidden;
-  height: 100%;
-  display: flex;
-  margin-bottom: 60px;
   //background-color: transparentize(green, .5);
 
+  &__header {
+    height: 60px;
+    padding: 0 15px;
+    //background-color: transparentize(green, .5);
+  }
+
+  &__content {
+    display: flex;
+    max-height: calc(100vh - 60px);
+    overflow: hidden;
+    height: 100%;
+    border-top: 2px solid $color-main-light-blue;
+  }
+
   &__menu {
-    width: 200px;
+    padding-top: 30px;
+    padding-left: 15px;
+    width: 250px;
     flex-shrink: 0;
     //background-color: transparentize(red, .5);
   }
+
   &__articles {
+    padding-top: 30px;
     flex-grow: 1;
     //background-color: transparentize(yellow, .5);
     .custom-scrollbar {
