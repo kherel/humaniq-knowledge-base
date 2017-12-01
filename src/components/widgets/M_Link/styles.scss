@@ -1,0 +1,9 @@
+@import "common/utils";
+@import "common/settings/variables";
+
+.m-link {
+  cursor: pointer;
+  &_disabled_true {
+    pointer-events: none;
+  }
+}

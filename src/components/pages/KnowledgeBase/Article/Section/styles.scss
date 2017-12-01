@@ -33,7 +33,9 @@
       font-size: 15px;
     }
     img {
-      width: 100%;
+      display: block;
+      width: 50%;
+      margin: 0 auto 30px auto;
       height: auto;
       object-fit: cover;
     }

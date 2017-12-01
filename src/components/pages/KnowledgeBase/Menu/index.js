@@ -46,6 +46,9 @@ const Menu = ({mix, articles, currentAnchorId, setScrollTo}) => (
 
 Menu.propTypes = {
   mix: T.string, //BEM mixin from parent block
+  articles: T.array.isRequired,
+  currentAnchorId: T.array.isRequired,
+  setScrollTo: T.func.isRequired
 };
 
 export default Menu

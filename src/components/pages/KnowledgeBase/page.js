@@ -3,15 +3,18 @@ import CustomScroll from 'react-custom-scroll'
 import 'react-custom-scroll/dist/customScroll.css'
 import { Motion, spring } from 'react-motion'
 import ScrollHandler from './ScrollHandler'
-import Header from './Header'
+import A_Logo_H from 'A_Logo_H'
+import A_BurgerBtn from 'A_BurgerBtn'
+import M_Link from 'M_Link'
 import Menu from './Menu'
+import MobileMenu from './MobileMenu'
 import Article from './Article'
 import Section from "./Article/Section";
 import './styles.scss'
 import {cssClassName} from 'utils'
 const cn = cssClassName('KnowledgeBase');
 
-let headerOffset = 90
+let HEADER_OFFSET = 92 //header height + top border width
 
 class KnowledgeBase extends Component {
 
@@ -20,10 +23,11 @@ class KnowledgeBase extends Component {
     scrollTo: 0,
     currentAnchorId: [],
     anchorCoords: {},
-    scrollMotionActive: false
+    scrollMotionActive: false,
+    mobileMenuActive: false
   }
 
-  _getAnchorCoords = (anchorBlocks, headerOffset) => {
+  _getAnchorCoords = (anchorBlocks, HEADER_OFFSET) => {
     const scrollPosition = this.refs.customScroll.refs.innerContainer.scrollTop
     console.log('scrollPosition',scrollPosition)
 
@@ -31,7 +35,7 @@ class KnowledgeBase extends Component {
     Object.entries(anchorBlocks).forEach((anchorBlock) => {
       const
         [id, block] = anchorBlock,
-        offset = headerOffset + pageYOffset - scrollPosition,
+        offset = HEADER_OFFSET + pageYOffset - scrollPosition,
         topCoord = Math.round(block.getBoundingClientRect().top - offset),
         bottomCoord = Math.round(block.getBoundingClientRect().bottom - offset)
 
@@ -41,7 +45,7 @@ class KnowledgeBase extends Component {
   }
 
   _handleResize = () => {
-    this.setState({anchorCoords: this._getAnchorCoords(this.anchorBlocks, headerOffset)})
+    this.setState({anchorCoords: this._getAnchorCoords(this.anchorBlocks, HEADER_OFFSET)})
   }
 
   _handleScroll = (e) => {
@@ -79,16 +83,14 @@ class KnowledgeBase extends Component {
     this.setState({scrollMotionActive: false})
   }
 
+  toggleMobileMenu = () => {
+    this.setState(state =>({mobileMenuActive: !state.mobileMenuActive}))
+  }
+
 
   componentDidMount() {
     window.addEventListener("resize", this._handleResize)
-
-    setTimeout(() => {
-      this.setState({anchorCoords: this._getAnchorCoords(this.anchorBlocks, headerOffset)})
-    }, 2000)
-
-    console.log(this)
-    window.testRef = this.refs.customScroll.refs.innerContainer
+    this.setState({anchorCoords: this._getAnchorCoords(this.anchorBlocks, HEADER_OFFSET)})
   }
 
   componentWillUnmount() {
@@ -98,19 +100,43 @@ class KnowledgeBase extends Component {
   render() {
     console.log('render')
     const {articles} = this.props
-    const {scrollTo, scrollPosition, currentAnchorId, scrollMotionActive} = this.state
+    const {scrollTo, scrollPosition, currentAnchorId, scrollMotionActive, mobileMenuActive} = this.state
     return (
       <main className={cn()}>
-        <Header
-          mix={cn('header')}
-        />
 
+        <header
+          className={cn('header')}
+        >
+          <M_Link
+            mix={cn('logo')}
+            type='external'
+            to='https://humaniq.com/'
+          >
+            <A_Logo_H />
+          </M_Link>
+
+          <A_BurgerBtn
+            mix={cn('burger-btn')}
+            onClick={this.toggleMobileMenu}
+            active={mobileMenuActive}
+          />
+        </header>
+        
         <div className={cn('content')}>
           <Menu
             mix={cn('menu')}
             articles={articles}
             setScrollTo={this.setScrollTo}
             currentAnchorId={currentAnchorId}
+          />
+
+          <MobileMenu
+            mix={cn('mobile-menu')}
+            articles={articles}
+            setScrollTo={this.setScrollTo}
+            currentAnchorId={currentAnchorId}
+            toggleMenu={this.toggleMobileMenu}
+            active={mobileMenuActive}
           />
 
           <div className={cn('articles')}>
