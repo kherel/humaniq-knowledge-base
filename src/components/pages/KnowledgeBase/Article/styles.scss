@@ -1,0 +1,11 @@
+@import 'common/settings/variables';
+@import 'common/utils';
+
+.kb-article {
+  &__title {
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: 30px;
+    line-height: 1.2;
+  }
+}

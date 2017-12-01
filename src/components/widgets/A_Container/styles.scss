@@ -1,0 +1,99 @@
+@import "common/settings/variables";
+@import "common/utils";
+
+.a-container{
+  margin: 0 auto;
+  width: $w-desktop + 40px; //width size + padding, becouse of border-box
+  padding: 0 $p-desktop;
+  @include media($tablet) {
+    width: 100%;
+    padding: 0 $p-tablet;
+  }
+  @include media($mobile) {
+    width: 100%;
+    padding: 0 $p-mobile;
+  }
+
+  &_type{
+    &_section-hmq{
+      padding-top: 3.2rem;
+      margin-bottom: 4rem;
+      @include media($tablet) {
+        margin-bottom: 1.6rem;
+      }
+    }
+
+    &_mob-wide-line{
+      width: 100%;
+      padding-top: 4rem;
+      margin-bottom: 1.6rem;
+      @include media($tablet) {
+        padding-left: 0;
+        padding-right: 0;
+      }
+    }
+    &_wide{
+      max-width: $w-desktop-wide + 40px; //width size + padding, becouse of border-box
+    }
+    &_section{
+      padding-top: 3.2rem;
+      padding-bottom: 1.8rem;
+      border-bottom: $border-line;
+      @include media($desktop) {
+        margin-bottom: 8rem;
+      }
+    }
+
+    &_section{
+      padding-top: 3.2rem;
+      padding-bottom: 1.8rem;
+      border-bottom: $border-line;
+      @include media($desktop) {
+        margin-bottom: 8rem;
+      }
+    }
+
+
+    &_section-last-mob{
+      @extend .a-container_type_section;
+      @include media($mobile) {
+        padding-bottom: 4rem;
+        border-bottom: none;
+      }
+    }
+
+    &_section-clean{
+      padding-top: 3.2rem;
+    }
+    &_section-long-text{
+      padding-top: 3.2rem;
+      &:last{
+        margin-bottom: 8rem;
+
+      }
+    }
+    &_equal{
+      padding-top: 3.2rem;
+      padding-bottom: 4rem;
+
+    }
+    &_section-interactive{
+      padding-top: 3.2rem;
+      padding-bottom: 8rem;
+      @include media($tablet) {
+        padding-bottom: 0rem;
+
+      }
+    }
+    &_section-wiki{
+      padding-top: 3.2rem;
+      padding-bottom: 1.5rem;
+      margin-bottom: 1.6rem;
+      border-bottom: $border-line;
+
+      @include media($mobile) {
+        padding-top: 1.6rem;
+      }
+    }
+  }
+}

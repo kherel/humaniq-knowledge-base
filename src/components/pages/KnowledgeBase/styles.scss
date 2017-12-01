@@ -1,0 +1,50 @@
+@import 'common/settings/variables';
+@import 'common/utils';
+
+.knowledge-base {
+  position: relative;
+  max-height: 100vh;
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  margin-bottom: 60px;
+  //background-color: transparentize(green, .5);
+
+  &__menu {
+    width: 200px;
+    flex-shrink: 0;
+    //background-color: transparentize(red, .5);
+  }
+  &__articles {
+    flex-grow: 1;
+    //background-color: transparentize(yellow, .5);
+    .custom-scrollbar {
+
+    }
+    .inner-handle {
+      border-radius: 0;
+      background-color: $color-main-light-blue;
+    }
+  }
+
+  &__article {
+    padding: 30px 20px;
+    &:nth-child(1) {
+      padding-top: 0;
+    }
+    &:nth-last-child(1) {
+      padding-bottom: 400px;
+    }
+  }
+
+  &__sections {
+
+  }
+
+  &__section {
+    padding: 20px 0 20px 20px;
+    &:nth-last-child(1) {
+      padding-bottom: 0;
+    }
+  }
+}

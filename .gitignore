@@ -1,0 +1,11 @@
+node_modules
+.idea
+#static/
+.DS_Store
+npm-debug.log
+/fonts
+static/assets/
+simple-api/node_module
+webpack-manifest.json
+webpack.config-copy.js
+package-lock.json
