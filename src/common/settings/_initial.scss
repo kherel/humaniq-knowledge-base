@@ -2,9 +2,10 @@
 @import "common/utils";
 
 html {
-  overflow: scroll;
-  overflow-x: hidden;
-  font-size: 62.5%;
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
 }
 
 body {
@@ -12,19 +13,12 @@ body {
   font-family: ProximaNova, sans-serif;
   overflow: auto;
   line-height: 2.6rem;
-  background-color: $white;
-  color: $text;
 }
 
 button{
   font-family: Celdum, sans-serif;
 }
 
-
-body > div {
-  overflow: hidden;
-  box-sizing: border-box;
-}
 
 a {
   color: inherit;
@@ -38,10 +32,6 @@ img {
 p {
   font-size: 17px;
   line-height: 1.65em;
-
-  &.p_center { text-align: center; }
-  + p { margin-top: 2.5em; }
-  >  a { color: $blue-1; }
 }
 
 // Общий случай модификаторов для скрытия-показа
