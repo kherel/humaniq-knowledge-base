@@ -2,6 +2,7 @@
 @import 'common/utils';
 
 .knowledge-base {
+  $this: &;
   position: relative;
   //background-color: transparentize(green, .5);
 
@@ -33,7 +34,6 @@
     max-height: calc(100vh - 60px);
     overflow: hidden;
     height: 100%;
-    border-top: 2px solid $color-main-light-blue;
   }
 
   &__menu {
@@ -63,6 +63,7 @@
   &__articles {
     padding: 30px 30px 0 60px;
     flex-grow: 1;
+    -webkit-overflow-scrolling: touch;
     //background-color: transparentize(yellow, .5);
     @include media($mobile-sm) {
       padding: 30px 15px 0 15px;
@@ -76,13 +77,33 @@
     }
   }
 
+  &__progress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background-color: transparentize($color-text-gray, .7);
+    &-line {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      background-color: $color-main-light-blue;
+    }
+  }
+
   &__article {
     padding: 30px 30px 0 0;
     &:nth-child(1) {
       padding-top: 0;
     }
     &:nth-last-child(1) {
-      padding-bottom: 400px;
+      #{$this}__section {
+        &:nth-last-child(1) {
+          min-height: calc(100vh - 62px);
+        }
+      }
     }
     @include media($mobile-sm) {
       padding-right: 15px;

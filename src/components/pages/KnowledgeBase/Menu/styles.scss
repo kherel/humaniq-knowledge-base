@@ -3,6 +3,8 @@
 
 .kb-menu {
   border-right: 2px solid $color-main-light-blue;
+  border-top: 2px solid $color-main-light-blue;
+
   &__article-links {
     display: flex;
     flex-direction: column;

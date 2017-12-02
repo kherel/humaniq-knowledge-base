@@ -46,10 +46,7 @@ const MobileMenu = ({mix, articles, active, ...props}) => (
   <div className={cn({active},[mix])}>
     <ul className={cn('links-list')}>
       {articles.map(({id: articleId, title, sections}) => {
-        console.log('...props', props)
-        return(
-        _createArticleLinks(articleId, title, sections, props)
-        )
+        return _createArticleLinks(articleId, title, sections, props)
       })}
     </ul>
   </div>
