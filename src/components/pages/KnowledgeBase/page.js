@@ -21,6 +21,8 @@ class KnowledgeBase extends Component {
   state = {
     scrollPosition: 0,
     scrollTo: 0,
+    scrollProgress: 0,
+    scrollFinish: 0,
     currentAnchorId: [],
     anchorCoords: {},
     scrollMotionActive: false,
@@ -29,9 +31,11 @@ class KnowledgeBase extends Component {
 
   _getAnchorCoords = (anchorBlocks, HEADER_OFFSET) => {
     const scrollPosition = this.refs.customScroll.refs.innerContainer.scrollTop
-    console.log('scrollPosition',scrollPosition)
 
-    let anchorCoords = {}
+    let
+      anchorCoords = {},
+      topCoords = []
+
     Object.entries(anchorBlocks).forEach((anchorBlock) => {
       const
         [id, block] = anchorBlock,
@@ -40,12 +44,18 @@ class KnowledgeBase extends Component {
         bottomCoord = Math.round(block.getBoundingClientRect().bottom - offset)
 
       anchorCoords = {...anchorCoords, [id]: {top: topCoord, bottom: bottomCoord}}
+      topCoords = [...topCoords, topCoord]
     });
-    return anchorCoords
+
+    const scrollFinish = topCoords.reduce(function(a, b) {
+      return Math.max(a, b);
+    });
+
+    this.setState({anchorCoords, scrollFinish})
   }
 
   _handleResize = () => {
-    this.setState({anchorCoords: this._getAnchorCoords(this.anchorBlocks, HEADER_OFFSET)})
+    this._getAnchorCoords(this.anchorBlocks, HEADER_OFFSET)
   }
 
   _handleScroll = (e) => {
@@ -53,6 +63,7 @@ class KnowledgeBase extends Component {
 
     this.setState({scrollPosition})
     this._setcurrentAnchorId(scrollPosition)
+    this._countScrollProgress(scrollPosition)
   }
 
   _setcurrentAnchorId = (scrollPosition) => {
@@ -69,6 +80,14 @@ class KnowledgeBase extends Component {
     }
 
     this.setState({ currentAnchorId })
+  }
+
+  _countScrollProgress = (scrollPosition) => {
+    const { scrollFinish } = this.state
+
+    const scrollProgress = Math.round(scrollPosition * 100 / scrollFinish)
+
+    this.setState({ scrollProgress })
   }
 
   setScrollTo = (anchorBlockId) => {
@@ -90,7 +109,7 @@ class KnowledgeBase extends Component {
 
   componentDidMount() {
     window.addEventListener("resize", this._handleResize)
-    this.setState({anchorCoords: this._getAnchorCoords(this.anchorBlocks, HEADER_OFFSET)})
+    this._getAnchorCoords(this.anchorBlocks, HEADER_OFFSET)
   }
 
   componentWillUnmount() {
@@ -100,7 +119,7 @@ class KnowledgeBase extends Component {
   render() {
     console.log('render')
     const {articles} = this.props
-    const {scrollTo, scrollPosition, currentAnchorId, scrollMotionActive, mobileMenuActive} = this.state
+    const {scrollTo, scrollPosition, currentAnchorId, scrollMotionActive, mobileMenuActive, scrollProgress} = this.state
     return (
       <main className={cn()}>
 
@@ -140,6 +159,14 @@ class KnowledgeBase extends Component {
           />
 
           <div className={cn('articles')}>
+
+            <div className={cn('progress')}>
+              <div
+                className={cn('progress-line')}
+                style={{ width: `${scrollProgress}%` }}
+              />
+            </div>
+
             <CustomScroll
               ref="customScroll"
               heightRelativeToParent='100%'
