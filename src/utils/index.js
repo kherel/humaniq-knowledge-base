@@ -117,16 +117,8 @@ export const numberFormat = function(n, dp){
 };
 
 
-export function arrayUnique(array) {
-  var a = array.concat();
-  for(var i=0; i<a.length; ++i) {
-    for(var j=i+1; j<a.length; ++j) {
-      if(JSON.stringify(a[i]) === JSON.stringify(a[j]))
-        a.splice(j--, 1);
-    }
-  }
-
-  return a;
+export function compareArrays(a, b) {
+  return a.length === b.length && a.every((aEl, i) => aEl === b[i])
 }
 
 export const apiDateFormat = momentDate => momentDate.format('YYYYMMDDTHHmmss[Z]')
