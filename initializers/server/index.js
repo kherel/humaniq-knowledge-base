@@ -3,6 +3,8 @@ require('app-module-path').addPath(path.join(process.cwd(), 'src'));
 require('./globals')
 const compression = require('compression')
 const mime = require('mime');
+const fetchPostmanApi = require('./utils/postmanApi.js')
+
 // const serveStatic = require('serve-static')
 // const fs = require('fs.extra');
 
@@ -16,6 +18,7 @@ const express = require('express')
 const application = express()
 
 application.use(compression());
+application.get('/postman-api', fetchPostmanApi)
 
 application.use(express.static('static', {
   setHeaders: function (res, path) {

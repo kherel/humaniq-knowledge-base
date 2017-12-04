@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
-import knowledgeBase from 'store/entities/knowledgeBase/reducer'
+import postmanApi from 'store/entities/postmanApi/reducer'
 
 
 export default combineReducers({
-  knowledgeBase
+  postmanApi
 })

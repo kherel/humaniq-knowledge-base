@@ -7,6 +7,7 @@ const getRoutes = () => {
     <Route
       path="/"
       component={KnowledgeBase}
+      prepareData={KnowledgeBase.prepareData}
     />
   )
 }
