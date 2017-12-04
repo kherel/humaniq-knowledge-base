@@ -12,62 +12,65 @@ import Article from './Article'
 import Section from "./Article/Section";
 import './styles.scss'
 import {cssClassName} from 'utils'
+import {compareArrays} from 'utils'
 const cn = cssClassName('KnowledgeBase');
 
-let HEADER_OFFSET = 92 //header height + top border width
+const HEADER_OFFSET = 92 //header height + top border
 
 class KnowledgeBase extends Component {
 
   state = {
-    scrollPosition: 0,
-    scrollTo: 0,
-    scrollProgress: 0,
-    scrollFinish: 0,
     currentAnchorId: [],
-    anchorCoords: {},
+    scrollProgress: 0,
     scrollMotionActive: false,
-    mobileMenuActive: false
+    mobileMenuActive: false,
   }
 
-  _getAnchorCoords = (anchorBlocks, HEADER_OFFSET) => {
-    const scrollPosition = this.refs.customScroll.refs.innerContainer.scrollTop
+  scrollData = {
+    getScrollPosition: () => this.refs.customScroll.refs.innerContainer.scrollTop,
+    anchorCoords: {},
+    scrollTo: 0,
+    scrollFinish: 0,
+  }
 
-    let
+
+  _setAnchorCoords = () => {
+    const { anchorBlocks } = this
+    const { getScrollPosition } =  this.scrollData
+    console.log('calculating anchor coords, current scroll position', getScrollPosition())
+
+    const
+      offset = HEADER_OFFSET + pageYOffset - getScrollPosition(),
       anchorCoords = {},
       topCoords = []
 
     Object.entries(anchorBlocks).forEach((anchorBlock) => {
       const
         [id, block] = anchorBlock,
-        offset = HEADER_OFFSET + pageYOffset - scrollPosition,
         topCoord = Math.round(block.getBoundingClientRect().top - offset),
         bottomCoord = Math.round(block.getBoundingClientRect().bottom - offset)
 
-      anchorCoords = {...anchorCoords, [id]: {top: topCoord, bottom: bottomCoord}}
-      topCoords = [...topCoords, topCoord]
+      anchorCoords[id] = {top: topCoord, bottom: bottomCoord}
+      topCoords.push(topCoord)
     });
 
-    const scrollFinish = topCoords.reduce(function(a, b) {
+    this.scrollData.anchorCoords = anchorCoords
+    this.scrollData.scrollFinish = topCoords.reduce(function(a, b) {
       return Math.max(a, b);
     });
-
-    this.setState({anchorCoords, scrollFinish})
   }
 
-  _handleResize = () => {
-    this._getAnchorCoords(this.anchorBlocks, HEADER_OFFSET)
+  _setScrollProgress = () => {
+    const { getScrollPosition, scrollFinish } =  this.scrollData
+
+    const scrollProgress = Math.round(getScrollPosition() * 100 / scrollFinish)
+
+    this.setState({ scrollProgress })
   }
 
-  _handleScroll = (e) => {
-    const scrollPosition = e.target.scrollTop
-
-    this.setState({scrollPosition})
-    this._setcurrentAnchorId(scrollPosition)
-    this._countScrollProgress(scrollPosition)
-  }
-
-  _setcurrentAnchorId = (scrollPosition) => {
-    const { anchorCoords } = this.state
+  _setCurrentAnchorId = () => {
+    const { getScrollPosition, anchorCoords } =  this.scrollData
+    const scrollPosition = getScrollPosition()
 
     let currentAnchorId = []
     for (let anchorId in anchorCoords) {
@@ -79,23 +82,18 @@ class KnowledgeBase extends Component {
       }
     }
 
-    this.setState({ currentAnchorId })
-  }
-
-  _countScrollProgress = (scrollPosition) => {
-    const { scrollFinish } = this.state
-
-    const scrollProgress = Math.round(scrollPosition * 100 / scrollFinish)
-
-    this.setState({ scrollProgress })
+    this.setState({currentAnchorId})
   }
 
   setScrollTo = (anchorBlockId) => {
-    const { anchorCoords } = this.state
+    const { anchorCoords } = this.scrollData
 
-    const scrollTo = anchorCoords[anchorBlockId].top
+    this.scrollData.scrollTo = anchorCoords[anchorBlockId].top
+    this.startScrollMotion()
+  }
 
-    this.setState({scrollTo, scrollMotionActive: true})
+  startScrollMotion = () => {
+    this.setState({scrollMotionActive: true})
   }
 
   finishScrollMotion = () => {
@@ -106,20 +104,42 @@ class KnowledgeBase extends Component {
     this.setState(state =>({mobileMenuActive: !state.mobileMenuActive}))
   }
 
+  _handleResize = () => {
+    this._setAnchorCoords()
+  }
+
+  _handleScroll = () => {
+    this._setCurrentAnchorId()
+    this._setScrollProgress()
+  }
+
 
   componentDidMount() {
     window.addEventListener("resize", this._handleResize)
-    this._getAnchorCoords(this.anchorBlocks, HEADER_OFFSET)
+    this._setAnchorCoords()
   }
 
   componentWillUnmount() {
     window.removeEventListener("resize", this._handleResize)
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    const
+      articles = !compareArrays(this.state.currentAnchorId, nextState.currentAnchorId),
+      scrollMotion = this.state.scrollMotionActive !== nextState.scrollMotionActive,
+      mobileMenu = this.state.mobileMenuActive !== nextState.mobileMenuActive
+
+    return articles || scrollMotion || mobileMenu
+  }
+
+
+
   render() {
     console.log('render')
     const {articles} = this.props
-    const {scrollTo, scrollPosition, currentAnchorId, scrollMotionActive, mobileMenuActive, scrollProgress} = this.state
+    const {currentAnchorId, scrollMotionActive, mobileMenuActive, scrollProgress} = this.state
+    const {scrollTo, getScrollPosition} = this.scrollData
+
     return (
       <main className={cn()}>
 
@@ -200,7 +220,7 @@ class KnowledgeBase extends Component {
           {scrollMotionActive ? (
             <Motion
               defaultStyle={{
-                scrollMotionProgress: scrollPosition //from
+                scrollMotionProgress: getScrollPosition() //from
               }}
               style={{
                 scrollMotionProgress: spring(scrollTo, {stiffness: 260, damping: 26}) //to
