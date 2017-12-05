@@ -8,7 +8,7 @@ class KnowledgeBaseRoute extends Component {
 
   static prepareData({dispatch}) {
     if(initialLoad()) return;
-    dispatch(fetchPostmanApi)
+    dispatch(fetchPostmanApi())
   }
   render() {
     return (
