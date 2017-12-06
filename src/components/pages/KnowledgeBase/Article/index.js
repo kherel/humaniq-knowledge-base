@@ -5,15 +5,14 @@ import {cssClassName} from 'utils'
 const cn = cssClassName('kb-article')
 
 
-const Article = ({mix, children, anchorRef, articleData: {id, title}}) => (
+const Article = ({mix, children, anchorRef, articleData: {id, title, description}}) => (
   <article
     ref={anchorRef}
     id={id}
     className={cn([mix])}
   >
-    <h3 className={cn('title')}>
-      {title}
-    </h3>
+    <h3 className={cn('title')}>{title}</h3>
+    <p className={cn('description')}>{description}</p>
     {children}
   </article>
 )

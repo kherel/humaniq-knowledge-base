@@ -1,0 +1,17 @@
+@import 'common/settings/variables';
+@import 'common/utils';
+
+.a-request-method {
+  text-transform: uppercase;
+  &_type {
+    &_get {
+      color: $color-green;
+    }
+    &_post {
+      color: $color-orange;
+    }
+    &_put {
+      color: $color-main-blue;
+    }
+  }
+}

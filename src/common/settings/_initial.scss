@@ -15,10 +15,12 @@ body {
   line-height: 2.6rem;
 }
 
-button{
-  font-family: Celdum, sans-serif;
+code {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-all;
+  hyphens: auto;
 }
-
 
 a {
   color: inherit;
@@ -34,16 +36,7 @@ p {
   line-height: 1.65em;
 }
 
-// Общий случай модификаторов для скрытия-показа
-// конкретные реализации (например, display:flex) — в контексте
 
-.mobile-show {
-  display: none;
-  @include media($mobile) { display: block; }
-}
-.mobile-hide {
-  @include media($mobile) { display: none; }
-}
 
 
 ::-webkit-scrollbar {

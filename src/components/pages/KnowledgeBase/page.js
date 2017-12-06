@@ -26,6 +26,8 @@ class KnowledgeBase extends Component {
     mobileMenuActive: false,
   }
 
+  initialRender = true
+
   scrollData = {
     getScrollPosition: () => this.refs.customScroll.refs.innerContainer.scrollTop,
     anchorCoords: {},
@@ -116,7 +118,15 @@ class KnowledgeBase extends Component {
 
   componentDidMount() {
     window.addEventListener("resize", this._handleResize)
-    this._setAnchorCoords()
+  }
+
+  componentDidUpdate() {
+    const {loaded} = this.props
+
+    if(loaded && this.initialRender) {
+      this.initialRender = false
+      this._setAnchorCoords()
+    }
   }
 
   componentWillUnmount() {
@@ -125,11 +135,12 @@ class KnowledgeBase extends Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     const
-      articles = !compareArrays(this.state.currentAnchorId, nextState.currentAnchorId),
+      articles = this.props.loaded !== nextProps.loaded,
+      currentAnchor = !compareArrays(this.state.currentAnchorId, nextState.currentAnchorId) && !this.state.scrollMotionActive,
       scrollMotion = this.state.scrollMotionActive !== nextState.scrollMotionActive,
       mobileMenu = this.state.mobileMenuActive !== nextState.mobileMenuActive
 
-    return articles || scrollMotion || mobileMenu
+    return articles || currentAnchor || scrollMotion || mobileMenu
   }
 
 
@@ -162,6 +173,7 @@ class KnowledgeBase extends Component {
         </header>
         
         <div className={cn('content')}>
+
           <Menu
             mix={cn('menu')}
             articles={articles}
@@ -223,7 +235,7 @@ class KnowledgeBase extends Component {
                 scrollMotionProgress: getScrollPosition() //from
               }}
               style={{
-                scrollMotionProgress: spring(scrollTo, {stiffness: 260, damping: 26}) //to
+                scrollMotionProgress: spring(scrollTo, {stiffness: 280, damping: 28}) //to
               }}
             >
               {({scrollMotionProgress}) => {
