@@ -6,6 +6,11 @@
   position: relative;
   //background-color: transparentize(green, .5);
 
+  .inner-handle {
+    border-radius: 0;
+    background-color: $color-main-light-blue;
+  }
+
   &__header {
     height: 60px;
     display: flex;
@@ -37,10 +42,11 @@
   }
 
   &__menu {
-    width: 250px;
+    width: 300px;
     padding-top: 30px;
-    padding-left: 15px;
+    padding-left: 10px;
     flex-shrink: 0;
+    -webkit-overflow-scrolling: touch;
     //background-color: transparentize(red, .5);
     @include media($mobile) {
       display: none;
@@ -69,11 +75,7 @@
       padding: 30px 15px 0 15px;
     }
     .custom-scrollbar {
-
-    }
-    .inner-handle {
-      border-radius: 0;
-      background-color: $color-main-light-blue;
+      right: 0;
     }
   }
 

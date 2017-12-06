@@ -7,7 +7,7 @@ class ScrollHandler extends Component {
 
 
     if(scrollTo !== scrollMotionProgress) {
-      scrollContainer.scrollTop = scrollMotionProgress + 5
+      scrollContainer.scrollTop = scrollMotionProgress
     }
     else {
       finishScrollMotion()

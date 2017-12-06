@@ -1,10 +1,11 @@
 import {connect} from 'react-redux';
 import page from './page'
 
-function mapStateToProps() {
+function mapStateToProps( state ) {
+  const {postmanApi} = state
 
   const articles = kbArticles.map((article, articleNum) => {
-    const articleId = `article-${articleNum + 1}`
+    const articleId = `article-test-${articleNum + 1}`
     return {
       ...article,
       id: articleId,
@@ -12,13 +13,16 @@ function mapStateToProps() {
         const sectionId = `${articleId}-section-${sectionNum + 1}`
         return {
           ...section,
+          type: 'demo',//to delete
           id: sectionId
         }
       })
     }
   })
 
-  return {articles};
+  const allArticles =  [...articles, ...postmanApi.articles]
+
+  return {articles: allArticles, loading: postmanApi.loading, loaded: postmanApi.loaded};
 }
 
 export default connect(mapStateToProps)(page);

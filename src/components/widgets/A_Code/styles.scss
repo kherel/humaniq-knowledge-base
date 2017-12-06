@@ -28,10 +28,10 @@
   }
   @media screen {
     .str {
-      color: #b5bd68;
+      color: $color-green;
     }
     .kwd {
-      color: #b294bb;
+      color: $color-main-blue;
     }
     .com {
       color: #969896;
@@ -40,7 +40,7 @@
       color: #81a2be;
     }
     .lit {
-      color: #de935f;
+      color: $color-orange;
     }
     .pun {
       color: #c5c8c6;
@@ -55,7 +55,7 @@
       color: #cc6666;
     }
     .atn {
-      color: #de935f;
+      color: $color-orange;
     }
     .atv {
       color: #8abeb7;
