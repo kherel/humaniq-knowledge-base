@@ -6,6 +6,8 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import ProgressBarPlugin from 'progress-bar-webpack-plugin'
 import OfflinePlugin from 'offline-plugin'
+import Dotenv from 'dotenv-webpack'
+
 const autoprefixer = require('autoprefixer');
 const sourcePath = path.join(__dirname, './src');
 
