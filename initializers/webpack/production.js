@@ -97,6 +97,7 @@ export default {
     }),
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: 'source-map'
-    })
+    }),
+    new Dotenv(),
   ]
 };
