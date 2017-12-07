@@ -4,6 +4,7 @@ require('./globals')
 const compression = require('compression')
 const mime = require('mime');
 const fetchPostmanApi = require('./utils/postmanApi.js')
+require('dotenv').config()
 
 // const serveStatic = require('serve-static')
 // const fs = require('fs.extra');
