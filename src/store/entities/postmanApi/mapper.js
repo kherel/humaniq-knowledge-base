@@ -2,7 +2,7 @@ const _getResponse = (rawResponse) => {
   let response
   rawResponse.forEach(({code, body}) => {
     if (code === 200) {
-      console.log('body', body)
+      // console.log('body', body)
       response = body
     }
   })
@@ -14,14 +14,14 @@ export default (articles) => {
   return Object.values(articles).map(({info:article, item:sections}, articleNum) => {
     sections = sections[0].item || sections
     const articleId = `article-${articleNum + 1}`
-    console.log('article.name', article.name)
+    // console.log('article.name', article.name)
     return {
       id: articleId,
       title: article.name,
       description: article.description,
 
       sections: sections.map(({name: sectionTitle, request, response}, sectionNum) => {
-        console.log('response', response)
+        // console.log('response', response)
         const sectionId = `${articleId}-section-${sectionNum + 1}`
         return {
           id: sectionId,

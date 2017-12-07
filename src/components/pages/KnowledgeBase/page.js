@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import CustomScroll from 'react-custom-scroll'
-import 'react-custom-scroll/dist/customScroll.css'
+import './customScroll.scss'
 import { Motion, spring } from 'react-motion'
 import ScrollHandler from './ScrollHandler'
 import A_Logo_H from 'A_Logo_H'
