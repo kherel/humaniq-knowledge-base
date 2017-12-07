@@ -10,9 +10,14 @@ const A_Code = ({ mix, codeString, language, linenums }) => {
     return null
   }
 
+  if(__SERVER__){
+    return null
+  }
+
   const codeData = prettyPrintOne(codeString, language, linenums)
 
   return <code className={cn([mix])} dangerouslySetInnerHTML={{ __html: codeData }} />
+
 }
 
 A_Code.propTypes = {
@@ -25,7 +30,7 @@ A_Code.propTypes = {
 A_Code.defaultProps = {
   language: null,
   linenums: true,
-  codeSting: '',
+  codeSting: ''
 }
 
 export default A_Code
