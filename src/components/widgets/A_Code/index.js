@@ -25,7 +25,7 @@ A_Code.propTypes = {
 A_Code.defaultProps = {
   language: null,
   linenums: true,
-  codeString: '',
+  codeSting: '',
 }
 
 export default A_Code
