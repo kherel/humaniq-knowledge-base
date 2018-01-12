@@ -10,7 +10,7 @@ const _getResponse = (rawResponse) => {
 }
 
 export default (articles) => {
-  console.log('articles',articles)
+  // console.log('articles',articles)
   return Object.values(articles).map(({info:article, item:sections}, articleNum) => {
     sections = sections[0].item || sections
     const articleId = `article-${articleNum + 1}`

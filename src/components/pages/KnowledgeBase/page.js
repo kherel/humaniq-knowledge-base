@@ -148,7 +148,6 @@ class KnowledgeBase extends Component {
 
 
   render() {
-    console.log('render')
 
     const { articles, loading, loaded } = this.props
     const { currentAnchorId, scrollMotionActive, mobileMenuActive, scrollProgress } = this.state
