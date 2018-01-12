@@ -4,7 +4,7 @@ import fetchPostmanApi from "initializers/server/utils/postmanApi"
 export default async () => {
   try {
     let value = await fetchPostmanApi()
-    let object = await Postman.findOne()
+    let object = await Postman.findOneOrCreate()
 
     await object.set({ value })
     await object.save()
