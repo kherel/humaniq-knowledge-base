@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import KnowledgeBaseContainer from 'components/pages/KnowledgeBase/container'
 import {fetchPostmanApi} from 'store/entities/postmanApi/actions'
-import initialLoad from 'utils/initialLoad'
+//import initialLoad from 'utils/initialLoad'
 
 
 class KnowledgeBaseRoute extends Component {

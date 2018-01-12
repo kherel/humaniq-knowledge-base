@@ -4,27 +4,10 @@
 .knowledge-base {
   $this: &;
   position: relative;
-  //background-color: transparentize(green, .5);
 
   .inner-handle {
     border-radius: 0;
     background-color: $color-main-light-blue;
-  }
-
-  &__header {
-    height: 60px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 15px;
-    //background-color: transparentize(green, .5);
-  }
-
-  &__logo {
-    display: block;
-    position: relative;
-    width: 115px;
-    height: 25px;
   }
 
   &__burger-btn {
@@ -34,11 +17,16 @@
     }
   }
 
-  &__content {
+  &__content, &__loader {
     display: flex;
+    min-height: calc(100vh - 60px);
     max-height: calc(100vh - 60px);
     overflow: hidden;
-    height: 100%;
+  }
+
+  &__loader {
+    justify-content: center;
+    align-items: center;
   }
 
   &__menu {
