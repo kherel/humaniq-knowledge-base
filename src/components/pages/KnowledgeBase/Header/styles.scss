@@ -1,0 +1,17 @@
+@import 'common/settings/variables';
+@import 'common/utils';
+
+.kb-header {
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 15px;
+
+  &__logo {
+    display: block;
+    position: relative;
+    width: 115px;
+    height: 25px;
+  }
+}

@@ -3,10 +3,9 @@ import CustomScroll from 'react-custom-scroll'
 import './customScroll.scss'
 import { Motion, spring } from 'react-motion'
 import ScrollHandler from './ScrollHandler'
-import A_Logo_H from 'A_Logo_H'
 import A_Loader from 'A_Loader'
 import A_BurgerBtn from 'A_BurgerBtn'
-import M_Link from 'M_Link'
+import Header from './Header'
 import Menu from './Menu'
 import MobileMenu from './MobileMenu'
 import Article from './Article'
@@ -40,7 +39,6 @@ class KnowledgeBase extends Component {
   _setAnchorCoords = () => {
     const { anchorBlocks } = this
     const { getScrollPosition } =  this.scrollData
-    console.log('calculating anchor coords, current scroll position', getScrollPosition())
 
     const
       offset = HEADER_OFFSET + pageYOffset - getScrollPosition(),
@@ -147,7 +145,6 @@ class KnowledgeBase extends Component {
 
 
   render() {
-    console.log('render')
 
     const { articles, loading, loaded } = this.props
     const { currentAnchorId, scrollMotionActive, mobileMenuActive, scrollProgress } = this.state
@@ -156,23 +153,13 @@ class KnowledgeBase extends Component {
     return (
       <main className={cn()}>
 
-        <header
-          className={cn('header')}
-        >
-          <M_Link
-            mix={cn('logo')}
-            type='external'
-            to='https://humaniq.com/'
-          >
-            <A_Logo_H />
-          </M_Link>
-
+        <Header>
           <A_BurgerBtn
             mix={cn('burger-btn')}
             onClick={this.toggleMobileMenu}
             active={mobileMenuActive}
           />
-        </header>
+        </Header>
 
         {!loading && loaded ? (
           <div className={cn('content')}>
