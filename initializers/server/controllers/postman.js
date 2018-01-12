@@ -1,18 +1,15 @@
-// import { fetchPostmanApi } from "initializers/utils"
-
+import { Postman } from "initializers/server/config/initialize/mongoose"
 
 export default {
 
   show: async (req, res, next) => {
-    // try {
+    try {
+      let object = await Postman.findOne()
 
-      // let res = await fetchPostmanApi()
-      // console.log()
-
-      res.status(200).json({ dsfsdf: 111 })
-    // } catch(err) {
-    //   return next(err)
-    // }
+      res.status(200).json(object.value)
+    } catch(err) {
+      return next(err)
+    }
   },
 
 }
