@@ -30,8 +30,6 @@ function fetchPostmanApi(req, res) {
             collections[collection.info.name] = collection
           })
           res.json({collections}).status(200)
-        }, reason => {
-          console.log(reason)
         })
     })
 
