@@ -26,3 +26,6 @@ Feel free to email us at [info@humaniq.com](mailto:info@humaniq.com)
 
 	$ npm run jobs - run parse postman every hours
 	$ npm run parse:postman - parse postman in file.json
+
+#### note
+- /v1/postman - reponse postman
