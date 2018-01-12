@@ -15,7 +15,7 @@ import {cssClassName} from 'utils'
 import {compareArrays} from 'utils'
 const cn = cssClassName('KnowledgeBase');
 
-const HEADER_OFFSET = 92 //header height + top border
+const HEADER_OFFSET = 92  //header height + top border
 
 class KnowledgeBase extends Component {
 
@@ -88,9 +88,12 @@ class KnowledgeBase extends Component {
 
   setScrollTo = (anchorBlockId) => {
     const { anchorCoords } = this.scrollData
+    const { scrollMotionActive } = this.state
 
-    this.scrollData.scrollTo = anchorCoords[anchorBlockId].top
-    this.startScrollMotion()
+    if(!scrollMotionActive && this.scrollData.scrollTo !== anchorCoords[anchorBlockId].top) {
+      this.scrollData.scrollTo = anchorCoords[anchorBlockId].top
+      this.startScrollMotion()
+    }
   }
 
   startScrollMotion = () => {
@@ -145,6 +148,7 @@ class KnowledgeBase extends Component {
 
 
   render() {
+    console.log('render')
 
     const { articles, loading, loaded } = this.props
     const { currentAnchorId, scrollMotionActive, mobileMenuActive, scrollProgress } = this.state
