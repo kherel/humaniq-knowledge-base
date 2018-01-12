@@ -2,9 +2,9 @@ import fs from 'fs'
 import request from 'superagent'
 import { compact } from 'lodash/array'
 
-export const write = async () => {
-  const path = "initializers/server/postman.json"
+const path = "initializers/server/postman.json"
 
+export const write = async () => {
   try {
     let value = await fetchPostmanApi()
 
@@ -21,8 +21,6 @@ export const write = async () => {
 }
 
 export const read = async () => {
-  const path = "initializers/server/postman.json"
-
   let res = await new Promise((res, rej) => {
     fs.readFile(path, (err, data) => {
       if (err) rej(err)
