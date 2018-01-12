@@ -90,7 +90,7 @@ class KnowledgeBase extends Component {
     const { anchorCoords } = this.scrollData
     const { scrollMotionActive } = this.state
 
-    if(!scrollMotionActive) {
+    if(!scrollMotionActive && this.scrollData.scrollTo !== anchorCoords[anchorBlockId].top) {
       this.scrollData.scrollTo = anchorCoords[anchorBlockId].top
       this.startScrollMotion()
     }
