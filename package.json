@@ -15,7 +15,7 @@
     "dev2": "NODE_ENV=development NO_SSR=true nodemon --watch ./initializers --watch webpack.config.js ./initializers/server/index.js",
     "rebuild": "npm install && npm run build",
     "jobs": "node --require babel-register ./initializers/server/jobs/index.js",
-    "db:parse:info": "node --require babel-register ./initializers/server/services/parse_info_postman.js"
+    "parse:postman": "node --require babel-register ./initializers/server/services/postmanCreateFile.js"
   },
   "dependencies": {
     "app-module-path": "^2.2.0",

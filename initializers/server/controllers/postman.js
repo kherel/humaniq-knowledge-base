@@ -1,16 +1,12 @@
-import { Postman, connectDb, closeDb } from "initializers/server/config/initialize/mongoose"
+import { read } from "initializers/server/services/postman"
 
 export default {
 
   show: async (req, res, next) => {
     try {
-      await connectDb()
+      let response = await read()
 
-      let object = await Postman.findOne()
-
-      await closeDb()
-
-      res.status(200).json(object.value)
+      res.status(200).json(response)
     } catch(err) {
       return next(err)
     }

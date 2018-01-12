@@ -25,4 +25,4 @@ Feel free to email us at [info@humaniq.com](mailto:info@humaniq.com)
 	$ npm run dev2 - quick start dev server without ssr
 
 	$ npm run jobs - run parse postman every hours
-	$ npm run db:parse:info - parse postman in db now
+	$ npm run parse:postman - parse postman in file.json
