@@ -6,12 +6,14 @@ const mime = require('mime');
 const fetchPostmanApi = require('./utils/postmanApi.js');
 require('dotenv').config();
 
+require('babel-core/register');
+require("babel-polyfill");
 // const serveStatic = require('serve-static')
 // const fs = require('fs.extra');
-
-require('babel-core/register');
 ['.css', '.less', '.sass', '.ttf', '.woff', '.woff2', '.scss'].forEach((ext) => require.extensions[ext] = () => {
 });
+
+const PostmanController = require('./controllers/postman').default
 
 const port = process.env.PORT || 8080;
 
@@ -59,7 +61,7 @@ if(process.env.NO_SSR){
   application.use(require('./render').default)
 }
 
-
+application.get('/v1/postman', PostmanController.show)
 
 application.listen(port, (err) => {
   if (err) console.log(err);
