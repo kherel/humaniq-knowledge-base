@@ -1,14 +1,12 @@
 import schedule from 'node-schedule'
 import { write } from "initializers/server/services/postman"
 
-let rule = new schedule.RecurrenceRule();
-rule.minute = new schedule.Range(0, 59, 1);
-
-schedule.scheduleJob(rule, async () => { await run() })
+schedule.scheduleJob('1 * * * *', async () => { await run() })
 
 const run = async () => {
   console.log("start", new Date())
 
+  console.log("create json file response postman")
   await write()
 
   console.log("end", new Date())

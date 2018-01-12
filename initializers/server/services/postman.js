@@ -7,7 +7,6 @@ export const write = async () => {
 
   try {
     let value = await fetchPostmanApi()
-    // let value = { sdfsdf: 222222 }
 
     await new Promise((res, rej) => {
       fs.writeFile(path, JSON.stringify(value), (err) => {
