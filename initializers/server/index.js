@@ -3,15 +3,16 @@ require('app-module-path').addPath(path.join(process.cwd(), 'src'));
 require('./globals')
 const compression = require('compression')
 const mime = require('mime');
-const fetchPostmanApi = require('./utils/postmanApi.js');
-require('dotenv').config();
 
+require('dotenv').config();
+require('babel-core/register');
+require("babel-polyfill");
 // const serveStatic = require('serve-static')
 // const fs = require('fs.extra');
-
-require('babel-core/register');
 ['.css', '.less', '.sass', '.ttf', '.woff', '.woff2', '.scss'].forEach((ext) => require.extensions[ext] = () => {
 });
+
+const PostmanController = require('./controllers/postman').default
 
 const port = process.env.PORT || 8080;
 
@@ -19,7 +20,7 @@ const express = require('express')
 const application = express()
 
 application.use(compression());
-application.get('/postman-api', fetchPostmanApi)
+application.get('/v1/postman', PostmanController.show);
 
 application.use(express.static('static', {
   setHeaders: function (res, path) {
@@ -58,7 +59,6 @@ if(process.env.NO_SSR){
 }else{
   application.use(require('./render').default)
 }
-
 
 
 application.listen(port, (err) => {
